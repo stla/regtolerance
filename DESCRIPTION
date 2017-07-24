@@ -1,0 +1,21 @@
+Package: regtolerance
+Type: Package
+Title: Tolerance intervals for Linear Regression
+Version: 1.0
+Date: 2017-07-22
+Author: Stéphane Laurent
+Maintainer: Stéphane Laurent <laurent_step@yahoo.fr>
+Description: Tolerance intervals for Gaussian linear regression models.
+License: GPL (>= 2)
+Depends: R (>= 3.3.3)
+Imports: Rcpp (>= 0.12.12), 
+         BH,
+         RcppNumerical,
+         RcppEigen
+LinkingTo: Rcpp, 
+           BH, 
+           RcppNumerical,
+           RcppEigen
+RoxygenNote: 6.0.1
+LazyData: true
+Encoding: UTF-8
