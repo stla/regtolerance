@@ -68,7 +68,8 @@ tolfactor <- function(X, xnew, p=0.9, alpha=0.05, side="one-sided", ...){
 #' tolinterval(fit, xnew=c(1, 88, 9), side="two-sided")
 tolinterval <- function(fit, xnew, p=0.9, alpha=0.05, side="left-sided"){
   side <- match.arg(side, choices = c("left-sided", "right-sided", "two-sided"))
-  k <- tolfactor(model.matrix(fit), xnew=xnew, p=p, alpha=alpha, side=side)
+  k <- tolfactor(model.matrix(fit), xnew=xnew, p=p, alpha=alpha, 
+                 side=ifelse(side=="two-sided", "two-sided", "one-sided"))
   estimates <- fit[["coefficients"]]
   yhat <- c(t(xnew) %*% matrix(estimates))
   if(side == "two-sided"){
