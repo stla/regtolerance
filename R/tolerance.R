@@ -5,11 +5,17 @@ kLM <- function(p, alpha, ell, d){
   sqrt(e*f/(1+delta)*rcpp_qchisq(p, 1, delta)*qf(1-alpha, e, ell)) # manque sqrt dans K&M
 }
 
+#' @importFrom stats qchisq uniroot
 solveK <- function(p, alpha, ell, d, ...){
   k_low <- sqrt(ell*qchisq(p,1)/qchisq(alpha, ell))
-  k_upp <- kLM(p, alpha, ell, d) + 1
-  uniroot(function(k) integral(ell, p, k, d) - (1-alpha), 
-          lower=k_low, upper=k_upp, ...)
+  k_upp <- kLM(p, alpha, ell, d) 
+  solver <- uniroot(function(k) integral(ell, p, k, d) - (1-alpha), 
+          lower=k_low, upper=k_upp, extendInt="upX", ...)
+  k <- solver$root
+  attr(k, "f.root") <- solver$f.root
+  attr(k, "iter") <- solver$iter
+  attr(k, "estim.prec") <- solver$estim.prec
+  k
 }
 
 #' Tolerance factor for linear regression
@@ -22,10 +28,10 @@ solveK <- function(p, alpha, ell, d, ...){
 #' @param ... arguments passed to \code{\link[base]{uniroot}} if \code{side="two-sided"}, 
 #' otherwise ignored
 #'
-#' @return A number, the one-sided tolerance factor, if \code{side="one-sided"}, 
-#' otherwise the output of \code{\link[base]{uniroot}}; the component \code{root} is 
-#' the two-sided tolerance factor
+#' @return A number, the tolerance factor. If \code{side="two-sided"}, some attributes 
+#' are set, the components of the output of \code{\link[base]{uniroot}}. 
 #' @export
+#' @importFrom stats qnorm
 #'
 #' @examples
 #' fit <- lm(mpg ~ disp+drat, data = mtcars)
@@ -66,7 +72,6 @@ tolinterval <- function(fit, xnew, p=0.9, alpha=0.05, side="left-sided"){
   estimates <- fit[["coefficients"]]
   yhat <- c(t(xnew) %*% matrix(estimates))
   if(side == "two-sided"){
-    k <- k$root
     return(yhat + c(-1,1)*k*sigma(fit))
   }
   if(side == "left-sided"){

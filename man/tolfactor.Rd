@@ -21,9 +21,8 @@ tolfactor(X, xnew, p = 0.9, alpha = 0.05, side = "one-sided", ...)
 otherwise ignored}
 }
 \value{
-A number, the one-sided tolerance factor, if \code{side="one-sided"}, 
-otherwise the output of \code{\link[base]{uniroot}}; the component \code{root} is 
-the two-sided tolerance factor
+A number, the tolerance factor. If \code{side="two-sided"}, some attributes 
+are set, the components of the output of \code{\link[base]{uniroot}}.
 }
 \description{
 Tolerance factor for linear regression
