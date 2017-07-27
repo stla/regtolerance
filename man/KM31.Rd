@@ -6,7 +6,7 @@
 \title{Krishnamoorthy & Mathew's example 3.1}
 \format{A data frame with 16 rows and 3 numerical columns.}
 \usage{
-data(KR31)
+data(KM31)
 }
 \description{
 The dataset used in Krishnammorthy & Mathew's example 3.1.
