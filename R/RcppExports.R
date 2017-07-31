@@ -9,7 +9,7 @@ rcpp_qchisq <- function(p, nu, delta) {
     .Call('_regtolerance_rcpp_qchisq', PACKAGE = 'regtolerance', p, nu, delta)
 }
 
-integral <- function(l, p, k, d) {
-    .Call('_regtolerance_integral', PACKAGE = 'regtolerance', l, p, k, d)
+integral <- function(l, p, k, d, subdiv = 100L, eps_abs = 1e-14, eps_rel = 1e-14) {
+    .Call('_regtolerance_integral', PACKAGE = 'regtolerance', l, p, k, d, subdiv, eps_abs, eps_rel)
 }
 

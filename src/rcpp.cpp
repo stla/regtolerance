@@ -44,11 +44,15 @@ public:
 };
 
 // [[Rcpp::export]]
-Rcpp::NumericVector integral(double l, double p, double k, double d){
+Rcpp::NumericVector 
+integral(double l, double p, double k, double d, 
+         int subdiv=100, double eps_abs=1e-14, double eps_rel=1e-14){
   Integrand f(l, p, k, d);
   double err_est;
   int err_code;
-  const double res = integrate(f, 0, 1, err_est, err_code);
+  const double res = integrate(f, 0, 1, err_est, err_code, 
+                               subdiv, eps_abs, eps_rel, 
+                               Integrator<double>::GaussKronrod201);
   Rcpp::NumericVector out = Rcpp::NumericVector::create(res);
   out.attr("err_est") = err_est;
   out.attr("err_code") = err_code;

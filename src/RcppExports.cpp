@@ -33,8 +33,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // integral
-Rcpp::NumericVector integral(double l, double p, double k, double d);
-RcppExport SEXP _regtolerance_integral(SEXP lSEXP, SEXP pSEXP, SEXP kSEXP, SEXP dSEXP) {
+Rcpp::NumericVector integral(double l, double p, double k, double d, int subdiv, double eps_abs, double eps_rel);
+RcppExport SEXP _regtolerance_integral(SEXP lSEXP, SEXP pSEXP, SEXP kSEXP, SEXP dSEXP, SEXP subdivSEXP, SEXP eps_absSEXP, SEXP eps_relSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -42,7 +42,10 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type k(kSEXP);
     Rcpp::traits::input_parameter< double >::type d(dSEXP);
-    rcpp_result_gen = Rcpp::wrap(integral(l, p, k, d));
+    Rcpp::traits::input_parameter< int >::type subdiv(subdivSEXP);
+    Rcpp::traits::input_parameter< double >::type eps_abs(eps_absSEXP);
+    Rcpp::traits::input_parameter< double >::type eps_rel(eps_relSEXP);
+    rcpp_result_gen = Rcpp::wrap(integral(l, p, k, d, subdiv, eps_abs, eps_rel));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -50,7 +53,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_regtolerance_rcpp_qt", (DL_FUNC) &_regtolerance_rcpp_qt, 3},
     {"_regtolerance_rcpp_qchisq", (DL_FUNC) &_regtolerance_rcpp_qchisq, 3},
-    {"_regtolerance_integral", (DL_FUNC) &_regtolerance_integral, 4},
+    {"_regtolerance_integral", (DL_FUNC) &_regtolerance_integral, 7},
     {NULL, NULL, 0}
 };
 
